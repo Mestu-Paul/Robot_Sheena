@@ -6,7 +6,66 @@ String readvoice;
 Servo servo[5];
 bool rightFingure[]={1,1,1,0,0};
 int angle=0;
-
+void musti(){
+  for(int j=0; j<3; j++){
+    for(int i=0; i<5; i++){
+      moveServo(i,90,00);
+    }
+    delay(1000);
+    for(int i=0; i<5; i++){
+      if(rightFingure[i]==1)moveServo(i,0,00);
+      else moveServo(i,180,00);
+    }
+    delay(1000);
+  }
+}
+void blinking(){
+  for(int j=0; j<5; j++){
+    moveServo(4,180,0);
+    for(int i=0; i<5; i++){
+      moveServo(i,90,0);
+      if(i-1>=0){
+        if(rightFingure[i-1]==1)moveServo(i-1,0,0);
+        else moveServo(i-1,180,0); 
+      }
+      delay(500);
+    }
+  }
+}
+void pattern1(){
+  for(int t=0; t<5; t++){
+    for(int i=1; i<=5; i++){
+      for(int j=0; j<i; j++){
+        moveServo(j,90,0);
+      }
+      delay(500);
+      for(int j=0; j<i; j++){
+        if(j<3)moveServo(j,0,0);
+        else moveServo(j,180,0);
+      }
+      delay(500);
+    }
+    
+  }
+}
+void pattern2(int n, int d){
+  for(int t=0; t<1; t++){
+    for(int i=0; i<=5-n; i++){
+     for(int j=i; j<i+n; j++){
+      moveServo(j,90,d);
+     } 
+     delay(500);
+     for(int j=0; j<i+n; j++){
+        if(j<3)moveServo(j,0,0);
+        else moveServo(j,180,0);
+      }
+      delay(500);
+    }
+  }
+}
+void pattern3(){
+  
+}
 void setup()
 {
   Serial.begin(9600);
@@ -21,35 +80,13 @@ void setup()
   }
 }
 
-
+int a=1;
 void loop()
 {
-  for(int j=0; j<3; j++){
-    for(int i=0; i<5; i++){
-      moveServo(i,90,00);
-    }
-    delay(1000);
-    for(int i=0; i<5; i++){
-      if(rightFingure[i]==1)moveServo(i,0,00);
-      else moveServo(i,180,00);
-    }
-    delay(1000);
-  }
-  for(int i=0; i<3; i++){
-      if(rightFingure[i]==1)moveServo(i,0,00);
-      else moveServo(i,180,00);
-    }
-  for(int j=0; j<5; j++){
-    moveServo(4,180,0);
-    for(int i=0; i<5; i++){
-      moveServo(i,90,0);
-      if(i-1>=0){
-        if(rightFingure[i-1]==1)moveServo(i-1,0,0);
-        else moveServo(i-1,180,0); 
-      }
-      delay(500);
-    }
-  }
+    pattern2(1,100);
+    pattern2(2,300);
+    pattern2(3,300);
+    pattern2(4,300);
   /**while (Serial.available() != 0)
   {
     delay(10);
